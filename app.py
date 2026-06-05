@@ -64,9 +64,13 @@ def signup():
 
 @app.route('/dashboard')
 def dashboard():
-    if 'user' in session:
-        return render_template('blog/dashboard.html')
-    return redirect('/login')
+
+    if 'user' not in session:
+        return redirect('/login')
+
+    posts = Post.query.filter_by(author=session['user']).all()
+
+    return render_template('blog/dashboard.html', posts=posts)
     
 @app.route('/create_post', methods=['GET', 'POST'])
 def create_post():
@@ -91,6 +95,28 @@ def create_post():
 
     return render_template('blog/create_post.html')
     
+
+@app.route('/my_post')
+def my_post():
+
+    if 'user' not in session:
+        return redirect('/login')
+
+    posts = Post.query.filter_by(author=session['user']).all()
+
+    return render_template('blog/my_post.html', posts=posts)
+
+
+@app.route('/all_post')
+def all_post():
+
+    if 'user' not in session:
+        return redirect('/login')
+
+    posts = Post.query.all()
+
+    return render_template('blog/all_post.html', posts=posts)
+
 
 with app.app_context():
     db.create_all()
