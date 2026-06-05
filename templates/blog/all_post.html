@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <title>All Posts</title>
+</head>
+
+<body>
+
+    <h1>All Posts</h1>
+
+    {% for post in posts %}
+
+    <div class="card m-3">
+        <div class="card-body">
+            <h3>{{ post.title }}</h3>
+            <p>{{ post.content }}</p>
+            <p><small>Author: {{ post.author }}</small></p>
+            <small>{{ post.date_created }}</small>
+        </div>
+    </div>
+
+    {% endfor %}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
