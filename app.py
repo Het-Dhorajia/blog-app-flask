@@ -167,6 +167,15 @@ def edit_post(id):
 
     return render_template('blog/edit_post.html', post=post)
 
+@app.route('/logout')
+def logout():
+
+    if 'user' not in session:
+        return redirect('/login')
+
+    session.pop('user', None)
+
+    return redirect('/login')
 with app.app_context():
     db.create_all()
 
