@@ -11,18 +11,58 @@
 </head>
 
 <body>
-    <h1>Dashboard</h1>
-    <p><a href="/create_post"><button>Create Post</button></a></p>
 
-    <P><a href="/my_post"><button>My Posts</button></a> </P>
+<div class="container mt-4">
 
-    <P><a href="/all_post"><button>All Posts</button></a></P>
+    <h1 class="text-center">Dashboard</h1>
 
-    <P><a href="/profile"><button>Profile</button></a></P>
+    <div class="text-center my-3">
+        <a href="/create_post">
+            <button >Create Post</button>
+        </a>
 
-    <P><a href="/logout"><button>Log Out</button></a></P>
+        <a href="/my_post">
+            <button >My Posts</button>
+        </a>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>
+        <a href="/all_post">
+            <button >All Posts</button>
+        </a>
+
+        <a href="/profile">
+            <button >Profile</button>
+        </a>
+
+        <a href="/logout">
+            <button >Logout</button>
+        </a>
+    </div>
+
+    <hr>
+
+    {% for post in posts %}
+
+    <div class="card m-3">
+        <div class="card-body">
+
+            <h3>{{ post.title }}</h3>
+            <p>{{ post.content }}</p>
+
+            <small>Author: {{ post.author }}</small><br>
+            <small>{{ post.date_created }}</small>
+
+            <br><br>
+
+            <a href="/post/{{ post.id }}">
+                <button >Read More</button>
+            </a>
+
+        </div>
+    </div>
+
+    {% endfor %}
+
+</div>
+
 </body>
-
 </html>
