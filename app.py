@@ -16,6 +16,14 @@ class User(db.Model ):
     Password = db.Column(db.String(500), nullable=False)
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
 
+class Post(db.Model):
+    id = db.Column(db.Integer , primary_key=True)
+    title = db.Column(db.String ,nullable=False)
+    content = db.Column(db.String , nullable=False)
+    author = db.Column(db.String , nullable=False)
+    date_created = db.Column(db.DateTime ,  default=datetime.utcnow)
+
+
 @app.route('/' , methods=['GET', 'POST'])
 def home():
 
@@ -57,9 +65,31 @@ def signup():
 @app.route('/dashboard')
 def dashboard():
     if 'user' in session:
-        return render_template('dashboard.html')
-    else:
+        return render_template('blog/dashboard.html')
+    return redirect('/login')
+    
+@app.route('/create_post', methods=['GET', 'POST'])
+def create_post():
+
+    if 'user' not in session:
         return redirect('/login')
+
+    if request.method == 'POST':
+        title = request.form['title']
+        content = request.form['content']
+
+        writer = Post(
+            title=title,
+            content=content,
+            author=session['user']
+        )
+
+        db.session.add(writer)
+        db.session.commit()
+
+        return redirect('/dashboard')
+
+    return render_template('blog/create_post.html')
     
 
 with app.app_context():
