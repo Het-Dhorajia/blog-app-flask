@@ -23,7 +23,6 @@ class Post(db.Model):
     author = db.Column(db.String , nullable=False)
     date_created = db.Column(db.DateTime ,  default=datetime.utcnow)
 
-
 @app.route('/' , methods=['GET', 'POST'])
 def home():
 
@@ -95,7 +94,6 @@ def create_post():
 
     return render_template('blog/create_post.html')
     
-
 @app.route('/my_post')
 def my_post():
 
@@ -106,7 +104,6 @@ def my_post():
 
     return render_template('blog/my_post.html', posts=posts)
 
-
 @app.route('/all_post')
 def all_post():
 
@@ -116,7 +113,6 @@ def all_post():
     posts = Post.query.all()
 
     return render_template('blog/all_post.html', posts=posts)
-
 
 @app.route('/profile')
 def profile():
@@ -134,7 +130,42 @@ def profile():
         total_posts=total_posts
     )
 
+@app.route('/delete_post/<int:id>')
+def delete_post(id):
 
+    if 'user' not in session:
+        return redirect('/login')
+
+    post = Post.query.get_or_404(id)
+
+    if post.author != session['user']:
+        return redirect('/my_post')
+
+    db.session.delete(post)
+    db.session.commit()
+
+    return redirect('/my_post')
+
+@app.route('/edit_post/<int:id>', methods=['GET', 'POST'])
+def edit_post(id):
+
+    if 'user' not in session:
+        return redirect('/login')
+
+    post = Post.query.get_or_404(id)
+
+    if post.author != session['user']:
+        return redirect('/my_post')
+
+    if request.method == 'POST':
+        post.title = request.form['title']
+        post.content = request.form['content']
+
+        db.session.commit()
+
+        return redirect('/my_post')
+
+    return render_template('blog/edit_post.html', post=post)
 
 with app.app_context():
     db.create_all()
