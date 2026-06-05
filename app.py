@@ -118,6 +118,24 @@ def all_post():
     return render_template('blog/all_post.html', posts=posts)
 
 
+@app.route('/profile')
+def profile():
+
+    if 'user' not in session:
+        return redirect('/login')
+
+    user = User.query.filter_by(Username=session['user']).first()
+
+    total_posts = Post.query.filter_by(author=session['user']).count()
+
+    return render_template(
+        'blog/profile.html',
+        user=user,
+        total_posts=total_posts
+    )
+
+
+
 with app.app_context():
     db.create_all()
 
