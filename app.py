@@ -61,7 +61,7 @@ def signup():
 
     return render_template('auth/signup.html')
 
-@app.route('/dashboard')
+@app.route('/dashboard')    
 def dashboard():
 
     if 'user' not in session:
@@ -176,6 +176,18 @@ def logout():
     session.pop('user', None)
 
     return redirect('/login')
+
+@app.route('/post/<int:id>')
+def post_detail(id):
+
+    post = Post.query.get_or_404(id)
+
+    return render_template('blog/post_detail.html', post=post)  
+    
+    
+
+
+
 with app.app_context():
     db.create_all()
 
