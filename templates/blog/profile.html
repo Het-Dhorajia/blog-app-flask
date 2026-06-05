@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <title>Profile Page</title>
+</head>
+
+<body>
+<h1>Profile Page</h1>
+
+<div class="card m-3">
+    <div class="card-body">
+        <h3>Username :{{ user.Username }}</h3>
+        <p>Acoount Created on :{{ user.date_created.strftime('%d-%m-%Y') }}</p>
+        <p>Total Posts: {{ total_posts }}</p>
+    </div>
+</div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
