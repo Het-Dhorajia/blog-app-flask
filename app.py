@@ -11,7 +11,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 class User(db.Model ):
-    sno = db.Column(db.Integer, primary_key=True)
+    sno = db.Column(db.Integer, primary_key=True)           
     Username = db.Column(db.String(200), nullable=False)
     Password = db.Column(db.String(500), nullable=False)
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
@@ -21,8 +21,9 @@ class Post(db.Model):
     title = db.Column(db.String ,nullable=False)
     content = db.Column(db.String , nullable=False)
     author = db.Column(db.String , nullable=False)
+    category = db.Column(db.String(100), default="General")
     date_created = db.Column(db.DateTime , default=datetime.utcnow)
-
+    
 class Comment(db.Model):
     id = db.Column(db.Integer , primary_key=True)
     content = db.Column(db.String , nullable=False)
@@ -68,7 +69,7 @@ def signup():
 
     return render_template('auth/signup.html')
 
-@app.route('/dashboard')    
+@app.route('/dashboard')
 def dashboard():
 
     if 'user' not in session:
@@ -87,14 +88,16 @@ def create_post():
     if request.method == 'POST':
         title = request.form['title']
         content = request.form['content']
+        category = request.form['category']
 
-        writer = Post(
+        new_post = Post(
             title=title,
             content=content,
-            author=session['user']
+            author=session['user'],
+            category=category
         )
 
-        db.session.add(writer)
+        db.session.add(new_post)
         db.session.commit()
 
         return redirect('/dashboard')
@@ -243,6 +246,22 @@ def search():
     posts = Post.query.filter(Post.title.contains(q)).all()
 
     return render_template('blog/search.html', posts=posts)
+
+
+
+@app.route('/category/<category_name>')
+def category_posts(category_name):
+
+    if 'user' not in session:
+        return redirect('/login')
+
+    posts = Post.query.filter_by(category=category_name).all()
+
+    return render_template(
+        'blog/category_posts.html',
+        posts=posts,
+        category=category_name
+    )
     
 with app.app_context():
     db.create_all()
