@@ -232,10 +232,17 @@ def delete_comment(id):
     return redirect(f'/post/{comment.post_id}')
 
 
-@app.route('/search' , methods=['GET', 'POST'])
+@app.route('/search', methods=['GET', 'POST'])
 def search():
 
-    return render_template('/blog/search.html')
+    if 'user' not in session:
+        return redirect('/login')
+
+    q = request.args.get('q')
+
+    posts = Post.query.filter(Post.title.contains(q)).all()
+
+    return render_template('blog/search.html', posts=posts)
     
 with app.app_context():
     db.create_all()
