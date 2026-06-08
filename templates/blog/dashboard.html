@@ -12,57 +12,61 @@
 
 <body>
 
-<div class="container mt-4">
+    <div class="container mt-4">
 
-    <h1 class="text-center">Dashboard</h1>
+        <h1 class="text-center">Dashboard</h1>
 
-    <div class="text-center my-3">
-        <a href="/create_post">
-            <button >Create Post</button>
-        </a>
-
-        <a href="/my_post">
-            <button >My Posts</button>
-        </a>
-
-        <a href="/all_post">
-            <button >All Posts</button>
-        </a>
-
-        <a href="/profile">
-            <button >Profile</button>
-        </a>
-
-        <a href="/logout">
-            <button >Logout</button>
-        </a>
-    </div>
-
-    <hr>
-
-    {% for post in posts %}
-
-    <div class="card m-3">
-        <div class="card-body">
-
-            <h3>{{ post.title }}</h3>
-            <p>{{ post.content }}</p>
-
-            <small>Author: {{ post.author }}</small><br>
-            <small>{{ post.date_created }}</small>
-
-            <br><br>
-
-            <a href="/post/{{ post.id }}">
-                <button >Read More</button>
+        <div class="text-center my-3">
+            <a href="/create_post">
+                <button>Create Post</button>
             </a>
 
+            <a href="/my_post">
+                <button>My Posts</button>
+            </a>
+
+            <a href="/all_post">
+                <button>All Posts</button>
+            </a>
+
+            <a href="/profile">
+                <button>Profile</button>
+            </a>
+
+            <a href="/logout">
+                <button>Logout</button>
+            </a>
         </div>
+
+        <hr>
+
+        {% for post in posts %}
+
+        <div class="card m-3">
+            <div class="card-body">
+
+                <h3>{{ post.title }}</h3>
+                <p>{{ post.content }}</p>
+
+                <small>Author: {{ post.author }}</small><br>
+                <small>{{ post.date_created.strftime('%d-%m-%Y') }}</small>
+                <p><span class="badge bg-success">
+                        {{ post.category }}
+                    </span></p>
+
+                <br>
+
+                <a href="/post/{{ post.id }}">
+                    <button>Read More</button>
+                </a>
+
+            </div>
+        </div>
+
+        {% endfor %}
+
     </div>
 
-    {% endfor %}
-
-</div>
-
 </body>
+
 </html>
