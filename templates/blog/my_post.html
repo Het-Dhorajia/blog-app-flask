@@ -18,44 +18,47 @@
 
         <div class="text-center my-3">
             <a href="/create_post">
-                <button >Create New Post</button>
+                <button>Create New Post</button>
             </a>
         </div>
 
         {% if posts|length == 0 %}
 
-            <div class="text-center mt-5">
-                <h3>No posts yet</h3>
-                <p>Create your first blog post</p>
-            </div>
+        <div class="text-center mt-5">
+            <h3>No posts yet</h3>
+            <p>Create your first blog post</p>
+        </div>
 
         {% else %}
 
-            {% for post in posts %}
+        {% for post in posts %}
 
-            <div class="card m-3">
-                <div class="card-body">
+        <div class="card m-3">
+            <div class="card-body">
 
-                    <h3>{{ post.title }}</h3>
-                    <p>{{ post.content }}</p>
-                    <small>Author: {{ post.author }}</small>
-                    <br>
-                    <small>{{ post.date_created }}</small>
+                <h3>{{ post.title }}</h3>
+                <p>{{ post.content }}</p>
+                <small>Author: {{ post.author }}</small>
+                <br>
+                <small>{{ post.date_created.strftime('%d-%m-%Y') }}</small>
+                 <p><span class="badge bg-success">
+                    {{ post.category }}
+                </span></p>
 
-                    <br><br>
+                <br>
 
-                    <a href="/edit_post/{{ post.id }}">
-                        <button >Edit</button>
-                    </a>
+                <a href="/edit_post/{{ post.id }}">
+                    <button>Edit</button>
+                </a>
 
-                    <a href="/delete_post/{{ post.id }}">
-                        <button >Delete</button>
-                    </a>
+                <a href="/delete_post/{{ post.id }}">
+                    <button>Delete</button>
+                </a>
 
-                </div>
             </div>
+        </div>
 
-            {% endfor %}
+        {% endfor %}
 
         {% endif %}
 
