@@ -55,6 +55,11 @@
 
                 </div>
 
+                <a href="/delete_comment/{{ comment.id }}">
+                    <button>Delete</button>
+                </a>
+
+
                 {% endfor %}
 
                 {% else %}
@@ -71,7 +76,7 @@
         <form method="POST">
             <div class="mb-3">
                 <label  class="form-label">Text box</label>
-                <input type="text" name ="comment"    class="form-control" >
+                <input type="text" name ="comment"   class="form-control" reqired>
             </div>
             
             <button type="submit" class="btn btn-primary">Submit</button>
