@@ -37,6 +37,11 @@
             <p>{{ post.content }}</p>
             <p><small>Author: {{ post.author }}</small></p>
             <small>{{ post.date_created.strftime('%d-%m-%Y') }}</small>
+
+            <a href="/category/<category_name>">
+            <p><span class="badge bg-success">
+                    {{ post.category }}
+                </span></p></a>
         </div>
 
         <a href="/post/{{ post.id }}">
