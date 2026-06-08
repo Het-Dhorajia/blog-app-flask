@@ -23,6 +23,13 @@ class Post(db.Model):
     author = db.Column(db.String , nullable=False)
     date_created = db.Column(db.DateTime ,  default=datetime.utcnow)
 
+class Comment(db.Model):
+    id = db.Column(db.Integer , primary_key=True)
+    content = db.Column(db.String , nullable=False)
+    author = db.Column(db.String , nullable=False)
+    post_id = db.Column(db.Integer , nullable=False)
+    date_created = db.Column(db.DateTime ,  default=datetime.utcnow)
+
 @app.route('/' , methods=['GET', 'POST'])
 def home():
 
@@ -177,17 +184,37 @@ def logout():
 
     return redirect('/login')
 
-@app.route('/post/<int:id>')
+@app.route('/post/<int:id>', methods=['GET', 'POST'])
 def post_detail(id):
 
     post = Post.query.get_or_404(id)
 
-    return render_template('blog/post_detail.html', post=post)  
+    if 'user' not in session:
+        return redirect('/login')
+
+    if request.method == 'POST':
+
+        content = request.form['comment']
+
+        comment = Comment(
+            content=content,
+            author=session['user'],
+            post_id=id
+        )
+
+        db.session.add(comment)
+        db.session.commit()
+
+        return redirect(f'/post/{id}')
+
+    comments = Comment.query.filter_by(post_id=id).all()
+
+    return render_template(
+        'blog/post_detail.html',
+        post=post,
+        comments=comments
+    )  
     
-    
-
-
-
 with app.app_context():
     db.create_all()
 
