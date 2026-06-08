@@ -21,7 +21,7 @@ class Post(db.Model):
     title = db.Column(db.String ,nullable=False)
     content = db.Column(db.String , nullable=False)
     author = db.Column(db.String , nullable=False)
-    date_created = db.Column(db.DateTime ,  default=datetime.utcnow)
+    date_created = db.Column(db.DateTime , default=datetime.utcnow)
 
 class Comment(db.Model):
     id = db.Column(db.Integer , primary_key=True)
@@ -214,6 +214,28 @@ def post_detail(id):
         post=post,
         comments=comments
     )  
+
+@app.route('/delete_comment/<int:id>')
+def delete_comment(id):
+
+    if 'user' not in session:
+        return redirect('/login')
+    
+    comment = Comment.query.get_or_404(id)
+
+    if comment.author != session['user']:
+        return redirect(f'/post/{comment.post_id}')
+    
+    db.session.delete(comment)
+    db.session.commit()
+
+    return redirect(f'/post/{comment.post_id}')
+
+
+@app.route('/search' , methods=['GET', 'POST'])
+def search():
+
+    return render_template('/blog/search.html')
     
 with app.app_context():
     db.create_all()
