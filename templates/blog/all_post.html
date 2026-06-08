@@ -11,6 +11,21 @@
 </head>
 
 <body>
+    <nav class="navbar bg-light">
+        <div class="container-fluid justify-content-end">
+
+            <form class="d-flex" action="/search" method="GET">
+
+                <input class="form-control me-2 border border-success" type="search" name="q" placeholder="Search">
+
+                <button class="btn btn-success" type="submit">
+                    Search
+                </button>
+
+            </form>
+
+        </div>
+    </nav>
 
     <h1>All Posts</h1>
 
@@ -21,9 +36,15 @@
             <h3>{{ post.title }}</h3>
             <p>{{ post.content }}</p>
             <p><small>Author: {{ post.author }}</small></p>
-            <small>{{ post.date_created }}</small>
+            <small>{{ post.date_created.strftime('%d-%m-%Y') }}</small>
         </div>
+
+        <a href="/post/{{ post.id }}">
+            <button>Read More</button>
+        </a>
+        <br>
     </div>
+
 
     {% endfor %}
 
