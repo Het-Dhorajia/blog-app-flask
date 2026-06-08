@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+<head>
+    <title>Category Posts</title>
+</head>
+<body>
+
+<h2>Category: {{ category }}</h2>
+
+{% if posts %}
+
+    {% for post in posts %}
+
+        <div>
+            <h3>{{ post.title }}</h3>
+
+            <span class="badge bg-success">
+                {{ post.category }}
+            </span>
+
+            <p>{{ post.content[:150] }}...</p>
+
+            <p>Author: {{ post.author }}</p>
+
+            <a href="/post/{{ post.id }}">Read More</a>
+
+        </div>
+
+    {% endfor %}
+
+{% else %}
+
+    <p>No posts found in this category</p>
+
+{% endif %}
+
+</body>
+</html>
