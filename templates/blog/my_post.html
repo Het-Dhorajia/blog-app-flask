@@ -41,9 +41,9 @@
                 <small>Author: {{ post.author }}</small>
                 <br>
                 <small>{{ post.date_created.strftime('%d-%m-%Y') }}</small>
-                 <p><span class="badge bg-success">
-                    {{ post.category }}
-                </span></p>
+                <p><span class="badge bg-success">
+                        {{ post.category }}
+                    </span></p>
 
                 <br>
 
@@ -51,10 +51,9 @@
                     <button>Edit</button>
                 </a>
 
-                <a href="/delete_post/{{ post.id }}">
+                <a href="/delete_post/{{ post.id }}" class="delete-btn">
                     <button>Delete</button>
                 </a>
-
             </div>
         </div>
 
@@ -63,6 +62,8 @@
         {% endif %}
 
     </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 
 </body>
 
