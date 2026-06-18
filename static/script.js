@@ -1,21 +1,39 @@
-console.log("JS Connected");
+let dark = document.getElementById("switchCheckDefault");
 
-let deleteBtns = document.querySelectorAll(".delete-btn");
 
-console.log(deleteBtns);
+// apply saved theme on every page load
+let savedTheme = localStorage.getItem("theme");
 
-deleteBtns.forEach(function(btn) {
+if (savedTheme === "dark") {
 
-    btn.addEventListener("click", function(event) {
+    document.body.classList.add("dark-mode");
 
-        event.preventDefault();
+    if (dark) {
+        dark.checked = true;
+    }
 
-        let ask = confirm("Are you sure you want to delete this post?");
+}
 
-        if (ask) {
-            window.location.href = btn.href;
+
+// dark mode switch (only exists on settings page)
+if (dark) {
+
+    dark.addEventListener("change", function () {
+
+        if (dark.checked) {
+
+            document.body.classList.add("dark-mode");
+
+            localStorage.setItem("theme", "dark");
+
+        } else {
+
+            document.body.classList.remove("dark-mode");
+
+            localStorage.setItem("theme", "light");
+
         }
 
     });
 
-});
+}
