@@ -262,6 +262,14 @@ def category_posts(category_name):
         posts=posts,
         category=category_name
     )
+
+@app.route('/setting' , methods=['GET', 'POST'])
+def setting():
+
+    if 'user' not in session:
+        return redirect('/login')
+
+    return render_template('blog/setting.html')
     
 with app.app_context():
     db.create_all()
