@@ -1,0 +1,39 @@
+body {
+    background-color: white;
+    color: black;
+}
+
+
+/* Dark mode */
+
+.dark-mode {
+    background-color: black;
+    color: white;
+}
+
+
+.dark-mode h1,
+.dark-mode h2,
+.dark-mode h3,
+.dark-mode p,
+.dark-mode span,
+.dark-mode small {
+    color: white;
+}
+
+
+.dark-mode button {
+    background-color: white;
+    color: black;
+}
+
+
+.dark-mode .card {
+    background-color: black;
+    color: white;
+}
+
+
+.dark-mode a {
+    color: white;
+}
